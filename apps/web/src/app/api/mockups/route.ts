@@ -1,14 +1,15 @@
 import { auth } from "@clerk/nextjs/server";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getOrCreateUser } from "@/lib/user";
 import { createMockupSchema } from "@/lib/validations";
 
 export async function GET() {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const user = await db.user.findUnique({ where: { clerkId: userId } });
-  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+  const user = await getOrCreateUser(userId);
 
   const mockups = await db.mockup.findMany({
     where: { userId: user.id },
@@ -23,8 +24,7 @@ export async function POST(req: Request) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const user = await db.user.findUnique({ where: { clerkId: userId } });
-  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+  const user = await getOrCreateUser(userId);
 
   const body = await req.json();
   const parsed = createMockupSchema.safeParse(body);
@@ -33,7 +33,11 @@ export async function POST(req: Request) {
   }
 
   const mockup = await db.mockup.create({
-    data: { ...parsed.data, userId: user.id },
+    data: {
+      ...parsed.data,
+      canvasJson: parsed.data.canvasJson as Prisma.InputJsonObject,
+      userId: user.id,
+    },
     include: { template: true },
   });
 

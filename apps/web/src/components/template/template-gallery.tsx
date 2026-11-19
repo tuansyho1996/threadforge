@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import type { Template, TemplateCategory } from "@/types";
+import type { Template } from "@/types";
+
+type TemplateCategory = Template["category"];
 
 const CATEGORIES: { label: string; value: TemplateCategory | "ALL" }[] = [
   { label: "All", value: "ALL" },

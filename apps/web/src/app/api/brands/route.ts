@@ -3,13 +3,13 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { createBrandSchema } from "@/lib/validations";
 import { slugify } from "@/lib/utils";
+import { getOrCreateUser } from "@/lib/user";
 
 export async function GET() {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const user = await db.user.findUnique({ where: { clerkId: userId } });
-  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+  const user = await getOrCreateUser(userId);
 
   const brands = await db.brand.findMany({
     where: { userId: user.id },
@@ -24,8 +24,7 @@ export async function POST(req: Request) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const user = await db.user.findUnique({ where: { clerkId: userId } });
-  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+  const user = await getOrCreateUser(userId);
 
   const body = await req.json();
   const parsed = createBrandSchema.safeParse(body);

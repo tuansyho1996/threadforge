@@ -45,7 +45,9 @@ ThreadForge is a **full-stack SaaS boilerplate** for building clothing brand moc
 
 ## Demo
 
-> Screenshots and live demo coming soon. Star the repo to get notified.
+Run the app and open [http://localhost:3000/demo](http://localhost:3000/demo) to try the
+interactive editor without signing in or configuring the database. Add text or an image,
+arrange it on the sample shirt, and export a PNG. Demo changes are not saved.
 
 <!-- Add screenshots here once the UI is built out:
 ![ThreadForge mockup editor](docs/editor-screenshot.png)
@@ -197,6 +199,11 @@ npx prisma migrate dev    # applies migrations + generates Prisma client
 npx prisma db seed        # seeds the garment template library
 npm run dev               # http://localhost:3000
 ```
+
+To try the editor without setting up authentication or a database, open
+`http://localhost:3000/demo`. Signing in and using the saved dashboard requires valid Clerk
+credentials and the database setup above. After signing in, the dashboard is available at
+`http://localhost:3000/dashboard/mockups`; a user record is created on the first dashboard visit.
 
 ### Useful commands
 

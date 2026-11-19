@@ -26,7 +26,7 @@ export function MockupCanvas({ template, onCanvasReady }: MockupCanvasProps) {
     fabricRef.current = canvas;
 
     // Load garment base image
-    FabricImage.fromURL(template.imageUrl, {}, { crossOrigin: "anonymous" }).then((img) => {
+    FabricImage.fromURL(template.imageUrl, { crossOrigin: "anonymous" }).then((img) => {
       img.scaleToWidth(800);
       img.selectable = false;
       img.evented = false;

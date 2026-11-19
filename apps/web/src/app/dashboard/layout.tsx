@@ -18,7 +18,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
+      {/* Dashboard navigation */}
       <aside className="flex w-56 flex-col border-r bg-card">
         <div className="flex h-14 items-center gap-2 border-b px-4">
           <Layers className="h-5 w-5" />
@@ -44,7 +44,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         </div>
       </aside>
 
-      {/* Main */}
+      {/* Dashboard content */}
       <main className="flex-1 overflow-auto">
         <div className="mx-auto max-w-7xl p-6">{children}</div>
       </main>

@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import type { Canvas } from "fabric";
 import { FabricText, FabricImage } from "fabric";
-import { Type, ImagePlus, Square, Trash2, Download, MoveUp, MoveDown } from "lucide-react";
+import { Type, ImagePlus, Trash2, Download, MoveUp, MoveDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface EditorToolbarProps {
@@ -30,7 +30,7 @@ export function EditorToolbar({ canvas, onExport }: EditorToolbarProps) {
     if (!canvas || !e.target.files?.[0]) return;
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
-    const img = await FabricImage.fromURL(url, {}, { crossOrigin: "anonymous" });
+    const img = await FabricImage.fromURL(url);
     img.scaleToWidth(200);
     canvas.add(img);
     canvas.setActiveObject(img);
@@ -54,7 +54,7 @@ export function EditorToolbar({ canvas, onExport }: EditorToolbarProps) {
   const sendBackward = useCallback(() => {
     if (!canvas) return;
     const obj = canvas.getActiveObject();
-    if (obj) canvas.sendObjectBackwards(obj);
+    if (obj && canvas.getObjects().indexOf(obj) > 1) canvas.sendObjectBackwards(obj);
   }, [canvas]);
 
   return (

@@ -13,6 +13,7 @@ export default function LandingPage() {
             ThreadForge
           </div>
           <nav className="hidden gap-6 text-sm text-muted-foreground sm:flex">
+            <Link href="/demo" className="hover:text-foreground">Try demo</Link>
             <Link href="/pricing" className="hover:text-foreground">Pricing</Link>
             <Link href="/about" className="hover:text-foreground">About</Link>
           </nav>
@@ -47,7 +48,7 @@ export default function LandingPage() {
             </Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
-            <Link href="/pricing">See pricing</Link>
+            <Link href="/demo">Try the demo</Link>
           </Button>
         </div>
       </section>
